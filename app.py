@@ -1,9 +1,12 @@
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_session import Session
+from flask_socketio import SocketIO, emit
 import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
+
+socketio = SocketIO(app)
 
 app.config["SESSION_PERMANENT"] = True
 app.config["SESSION_TYPE"] = "filesystem"
@@ -64,15 +67,29 @@ def logout():
     session.clear()
     return redirect("/")
 
-@app.route("/sendmessage", methods=["POST"])
-def sendmessage():
-    username = session["username"]
+# @app.route("/sendmessage", methods=["POST"])
+# def sendmessage():
+#     username = session["username"]
+#     now = datetime.now()
+#     time = str(now.strftime("%d/%m/%Y %H:%M"))
+#     content = request.form.get("content")
+
+#     db = sqlite3.connect("test.db")
+#     cursor = db.cursor()
+#     cursor.execute("INSERT INTO messages (username, content, datetime) VALUES (?, ?, ?)", (username, content, time))
+#     db.commit()
+#     return redirect("/chat")
+
+@socketio.on('sendMessage')
+def handle_message(message):
+    
+    username = session.get("username")
     now = datetime.now()
     time = str(now.strftime("%d/%m/%Y %H:%M"))
-    content = request.form.get("content")
 
     db = sqlite3.connect("test.db")
     cursor = db.cursor()
-    cursor.execute("INSERT INTO messages (username, content, datetime) VALUES (?, ?, ?)", (username, content, time))
+    cursor.execute("INSERT INTO messages (username, content, datetime) VALUES (?, ?, ?)", (username, message, time))
     db.commit()
-    return redirect("/chat")
+    print({'username': username, 'content': message, 'datetime': time})
+    emit('receiveMessage', {'username': username, 'content': message, 'datetime': time}, broadcast=True)
