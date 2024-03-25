@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>CHAT</h1>
+<h3>Hello, {{username}}</h3>
+<a href="logout">Log-out</a>
+<form action="sendmessage" method="post">
+    <textarea name="content" id="content" cols="30" rows="6"></textarea>
+    <button type="submit">Send</button>
+</form>
+{% for message in messages %}
+<div class="message">
+    <h5>{{message[1]}} at {{message[3]}}:</h5>
+    <p>{{message[2]}}</p>
+</div>
+{% endfor %}
+{% endblock %}
