@@ -4,15 +4,22 @@
 <h1>CHAT</h1>
 <h3>Hello, {{username}}</h3>
 <a href="logout">Log-out</a>
+<form action="uploadpicture" method="post" enctype="multipart/form-data" class="">
+    <input type="file" name="picture" id="picture" accept="image/*">
+    <button type="submit">Set Profile Picture</button>
+</form>
 <form action="sendmessage" method="post" class="sendmessage">
-    <textarea name="content" id="content" cols="30" rows="6"></textarea>
+    <input type="text" name="content" id="content">
     <button type="submit" id="msgbtn">Send</button>
 </form>
 <div class="messages">
 {% for message in messages %}
 <div class="message">
-    <h5>{{message[1]}} at {{message[3]}}:</h5>
-    <p>{{message[2]}}</p>
+    <div class="title">
+        <img src="{{message[3]}}">
+        <h5>{{message[0]}} at {{message[2]}}:</h5>
+    </div>
+    <p>{{message[1]}}</p>
 </div>
 {% endfor %}
 </div>

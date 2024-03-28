@@ -1,0 +1,62 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 1rem;
+    background-color: rgb(245, 245, 245);
+}
+
+a {
+    display: block;
+    width: 100%;
+}
+
+h1, h3, a {
+    text-align: center;
+}
+
+input, button, textarea {
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+textarea {
+    width: 100%;
+}
+
+.message {
+    border-bottom: 1px solid black;
+    padding: 0.5rem;
+}
+
+.sendmessage {
+    margin-bottom: 1rem;
+}
+
+.sendmessage button {
+    padding: 0.5 2rem !important;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.title img{
+    width: 2rem;
+    height: 2rem;
+    transition: 100ms;
+    border-radius: 8px;
+}
+
+.title img:hover {
+    transform: scale(1.5);
+}
+
+.message p {
+    padding-top: 0.5rem;
+}
