@@ -101,7 +101,7 @@ def handle_message(message):
 def uploadpicture():
     picture = request.files["picture"]
     filename = secure_filename(picture.filename)
-    picturePath = os.path.join(app.config['UPLOAD_FOLDER'], "profilePicture", filename)
+    picturePath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     picture.save(picturePath)
     db = sqlite3.connect("chat.db")
     cursor = db.cursor()
